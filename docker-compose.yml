@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    env_file:
+      - .env.local
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/news_summarizer
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    networks:
+      - news-summarizer-network
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - news-summarizer-network
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/news_summarizer
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: new_secure_password
+    networks:
+      - news-summarizer-network
+    depends_on:
+      - mongo
+
+networks:
+  news-summarizer-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
