@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from app.Scrapper.ContentScrapper import ContentScrapper
 from app.DatabaseContext.DatabaseContext import DatabaseContext
+from app.CeleryConfigs.Tasks import summarize_news
 import os
 
 load_dotenv()
@@ -32,3 +33,9 @@ def get_news_summary(url: str = Body(..., embed=True)):
     scrapper = ContentScrapper(db_context)
     summary = scrapper.scrape_news(url)
     return {"summary": summary}
+
+@app.get("/scheduled-task")
+def trigger_scheduled_task():
+    # Trigger the scheduled task manually (for testing)
+    task = summarize_news.delay()
+    return {"task_id": task.id}

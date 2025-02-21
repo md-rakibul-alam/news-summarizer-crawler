@@ -40,9 +40,39 @@ services:
     depends_on:
       - mongo
 
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - news-summarizer-network
+
+  celery_worker:
+    build: .
+    command: celery -A app.CeleryConfigs.Config worker --loglevel=debug
+    volumes:
+      - .:/app
+    networks:
+      - news-summarizer-network
+    depends_on:
+      - redis
+
+  celery_beat:
+    build: .
+    command: celery -A app.CeleryConfigs.Config beat --loglevel=debug
+    volumes:
+      - .:/app
+    networks:
+      - news-summarizer-network
+    depends_on:
+      - redis
+
 networks:
   news-summarizer-network:
     driver: bridge
 
 volumes:
   mongodb_data:
+  redis_data:
