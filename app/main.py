@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException, Body
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from app.Scrapper.ContentScrapper import scrape_news
+from app.Scrapper.ContentScrapper import ContentScrapper
+from app.DatabaseContext.DatabaseContext import DatabaseContext
 import os
 
 load_dotenv()
@@ -27,5 +28,7 @@ def get_news_summary(url: str = Body(..., embed=True)):
     if not url:
         raise HTTPException(status_code=400, detail="URL is required")
     
-    summary = scrape_news(url)
+    db_context = DatabaseContext()
+    scrapper = ContentScrapper(db_context)
+    summary = scrapper.scrape_news(url)
     return {"summary": summary}
