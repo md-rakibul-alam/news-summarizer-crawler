@@ -69,15 +69,39 @@ def summarize_news(article_text: str):
     * There should be at least one category.
     * There should be no duplicate categories.
     * Pick the most relevant category/categories.
-    
-    Please format your response in JSON format. The JSON will have two properties "OriginalSummary", "TranslatedSummary", "Title".
-    ## Here is the JSOn format: 
+
+    ## Requirements for Sentiment:
+    * Analyze this news article and classify it as "Positive", "Negative", or "Neutral".
+    * The sentiment should be in English.
+    * The sentiment should be a single string.
+    * The sentiment should be based on the overall tone of the news article.
+    * The sentiment should be based on the content of the news article.
+
+    ## Requirements for OriginalKeyPharases:
+    * Extract key terms or phrases from the article.
+    * Provide a list of keywords.
+    * The keywords should be in the same language as the input article.
+    * The keywords should be relevant to the content of the article.
+    * The keywords should be a maximum of 10 words.
+
+    ## Requirements for TranslatedKeyPharases:
+    * Provide an accurate English translation of your original keywords.
+    * Maintain the same meaning as the original keywords.
+    * Ensure natural English flow.
+    * The keywords should be relevant to the content of the article.
+    * The keywords should be a maximum of 10 words.
+
+
+    ## Here is the JSON format: 
     {
         "OriginalSummary": "string",
         "TranslatedSummary": "string",
         "OriginalTitle": "string",
         "TranslatedTitle": "string",
-        "Category": ["string"]
+        "Category": ["string"],
+        "Sentiment": "string",
+        "OriginalKeyPharases": ["string"],
+        "TranslatedKeyPharases": ["string"]
     }
 
     ## Strictly follow the json format. It is very important for us.   

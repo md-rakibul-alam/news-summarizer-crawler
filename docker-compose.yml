@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.9"
 
 services:
   app:
@@ -15,9 +15,11 @@ services:
       - news-summarizer-network
     depends_on:
       - mongo
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
 
   mongo:
-    image: mongo
+    image: mongo:latest
+    container_name: mongo_container
     restart: always
     ports:
       - "27017:27017"
@@ -25,6 +27,8 @@ services:
       - mongodb_data:/data/db
     networks:
       - news-summarizer-network
+    logging:
+      driver: "none"
 
   mongo-express:
     image: mongo-express
@@ -39,6 +43,8 @@ services:
       - news-summarizer-network
     depends_on:
       - mongo
+    logging:
+      driver: "none"
 
   redis:
     image: redis:latest
@@ -48,6 +54,8 @@ services:
       - redis_data:/data
     networks:
       - news-summarizer-network
+    logging:
+      driver: "none"
 
   celery_worker:
     build: .
@@ -58,6 +66,8 @@ services:
       - news-summarizer-network
     depends_on:
       - redis
+    logging:
+      driver: "none"
 
   celery_beat:
     build: .
@@ -68,6 +78,8 @@ services:
       - news-summarizer-network
     depends_on:
       - redis
+    logging:
+      driver: "none"
 
 networks:
   news-summarizer-network:

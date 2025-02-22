@@ -17,6 +17,7 @@ class DatabaseContext(IDatabaseContext):
 
     def SaveNews(self, news_object):
         self.collection.insert_one(news_object)
+        print(news_object)
 
 if __name__ == "__main__":
     pass
