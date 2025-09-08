@@ -11,13 +11,13 @@
 
 3. Create a `.env` file in the same directory with the following environment variables:
     ```env
-    MONGO_DB=news_summarizer
-    MONGO_PORT=27017
-    MONGO_EXPRESS_PORT=8081
-    MONGO_EXPRESS_USER=admin
-    MONGO_EXPRESS_PASSWORD=new_secure_password
-    PORT=8000
-    GEMINI_API_KEY=AIzaSyAC-_IhAXPdVAuPHqZEpBs8Q3yr8QH2G6I
+    MONGO_DB=DB_NAME
+    MONGO_PORT=MONGO_DB_PORT
+    MONGO_EXPRESS_PORT=MONGO_EXPRESS_PORT
+    MONGO_EXPRESS_USER=MONGO_EXPRESS_USER
+    MONGO_EXPRESS_PASSWORD=MONGO_EXPRESS_PASSWORD
+    PORT=PORT
+    GEMINI_API_KEY=GEMINI_API_KEY
     ```
 
 4. Run the following command to start the services:
